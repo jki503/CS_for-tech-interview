@@ -5,15 +5,15 @@ tags: 알고리즘, 탐색, 그리디, 동적프로그래밍,
 Author: Jung
 ---
 
-## Algorithm 목차
+## **Algorithm**
 
 ---
 
-- [Algorithm 목차](#algorithm-목차)
+- [**Algorithm**](#algorithm)
   - [**DFS(깊이 우선 탐색)**](#dfs깊이-우선-탐색)
     - [**동작 원리**](#동작-원리)
-    - [시간 복잡도](#시간-복잡도)
-    - [코드 구현](#코드-구현)
+    - [**시간 복잡도**](#시간-복잡도)
+    - [**코드 구현**](#코드-구현)
   - [BFS(너비 우선 탐색)](#bfs너비-우선-탐색)
 
 </br>
@@ -45,7 +45,7 @@ Author: Jung
 </br>
 </br>
 
-#### 시간 복잡도
+#### **시간 복잡도**
 
 |  구현 방식  | 수행 시간 |
 | :---------: | :-------: |
@@ -68,7 +68,7 @@ Author: Jung
 </br>
 </br>
 
-#### 코드 구현
+#### **코드 구현**
 
 ![dfs-bfs_image](./res/dfs-bfs-drawing.png)
 
@@ -266,7 +266,7 @@ public class DFS {
 예시 이미지와 동일한 정보를 입력.
 시작 노드는 0, 도착 노드는 7로 테스트 한 결과
 
-[To 목차](#algorithm-목차)
+[To 목차](#algorithm)
 
 </br>
 
@@ -278,6 +278,6 @@ public class DFS {
 </br>
 </br>
 
-[To 목차](#algorithm-목차)
+[To 목차](#algorithm)
 
 </br>
