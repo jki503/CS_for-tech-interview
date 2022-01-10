@@ -67,7 +67,7 @@ title: Algorithm category: algorithm tags: 알고리즘, 탐색, 그리디, 동�
 
 #### 코드 구현
 
-![dfs-bfs_image](./res/dfs-bfs-drawing.png)
+![dfs-bfs_image](/algorithm/res/dfs-bfs-drawing.png)
 
 > 예시 그림대로 0에서 부터 출발 하여 각각 인접행렬과 인접리스트로 구현 후  
 > 시작 지점과 도착 지점 간의 최소 거리를 출력 해보기.
@@ -258,7 +258,7 @@ public class DFS {
 }
 ```
 
-![dfs_test](./res/dfs_test.png)
+![dfs_test](/algorithm/res/dfs-bfs-drawing.png/res/dfs_test.png)
 
 예시 이미지와 동일한 정보를 입력.
 시작 노드는 0, 도착 노드는 7로 테스트 한 결과
