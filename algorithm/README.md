@@ -11,10 +11,13 @@ Author: Jung
 
 - [**Algorithm**](#algorithm)
   - [**DFS(깊이 우선 탐색)**](#dfs깊이-우선-탐색)
-    - [**동작 원리**](#동작-원리)
-    - [**시간 복잡도**](#시간-복잡도)
-    - [**코드 구현**](#코드-구현)
-  - [BFS(너비 우선 탐색)](#bfs너비-우선-탐색)
+    - [**DFS 동작 원리**](#dfs-동작-원리)
+    - [**DFS 시간 복잡도**](#dfs-시간-복잡도)
+    - [**DFS 코드 구현**](#dfs-코드-구현)
+  - [**BFS(너비 우선 탐색)**](#bfs너비-우선-탐색)
+    - [**BFS 동작 원리**](#bfs-동작-원리)
+    - [**BFS 시간 복잡도**](#bfs-시간-복잡도)
+    - [**BFS 코드 구현**](#bfs-코드-구현)
 
 </br>
 </br>
@@ -26,26 +29,26 @@ Author: Jung
 
 </br>
 
-- 그래프를 `깊이`, 종의 방향 각 정점을 한 번만 방문하는완전 탐색.
+- 그래프를 `깊이`, 종의 방향 각 정점을 한 번만 방문하는 완전 탐색.
 - `재귀`, `stack` 구현 방식
 - 재귀 호출 시 스택 메모리에 쌓임, 이론 상 동일한 원리
 
 </br>
 
-#### **동작 원리**
+#### **DFS 동작 원리**
 
 </br>
 
 > 1. 시작 정점 시작.
 > 2. 현재 방문 정점 v와 인접한 정점을 하나씩 검사.
-> 3. 장문 되지 않은 정점 w가 있으면 방문 반복 후
+> 3. 방문 되지 않은 정점 w가 있으면 방문 반복 후
 > 4. 더 이상 갈 곳이 없는 정점에 도달하면 이전 간선을 따라 backtrack
 > 5. 다시 인접한 정점을 방문 탐색 반복
 
 </br>
 </br>
 
-#### **시간 복잡도**
+#### **DFS 시간 복잡도**
 
 |  구현 방식  | 수행 시간 |
 | :---------: | :-------: |
@@ -68,9 +71,9 @@ Author: Jung
 </br>
 </br>
 
-#### **코드 구현**
+#### **DFS 코드 구현**
 
-![dfs-bfs_image](./res/dfs-bfs-drawing.png)
+![dfs-bfs_image](./res/dfs-img.png)
 
 > 예시 그림대로 0에서 부터 출발 하여 각각 인접행렬과 인접리스트로 구현 후  
 > 시작 지점과 도착 지점 간의 최소 거리를 출력 해보기.
@@ -269,15 +272,141 @@ public class DFS {
 [To 목차](#algorithm)
 
 </br>
+</br>
+</br>
 
-### BFS(너비 우선 탐색)
+### **BFS(너비 우선 탐색)**
 
 ---
 
 </br>
+
+- 그래프를 `너비`, `횡의 방향`으로 각 정점을 한 번씩만 방문하는 완전 탐색
+- `큐` 구현 방식
+
+[To 목차](#algorithm)
+
+#### **BFS 동작 원리**
+
+- 시작 지점으로 부터 거리(깊이)가 증가하는 순서 대로 방문
+
+#### **BFS 시간 복잡도**
+
+|  구현 방식  | 수행 시간 |
+| :---------: | :-------: |
+|  인접 행렬  |  O(n^n)   |
+| 인접 리스트 |  O(n+m)   |
+
+- n : 정점의 개수
+- m : 에지의 개수
+
+</br>
+
+1. 인접 행렬
+
+> 인접 하는 간선을 모두 검사하는 방식으로 2차원 행렬을 통해 에지 정보를 모두 검색함으로 O(n^n)이다.
+
+</br>
+
+2. 인접 리스트
+
+> 각 정점 n개의 리스트가 가지고 있는 m의 정보임으로 O(n+m)이다.
+
+#### **BFS 코드 구현**
+
+![bfs-img](/algorithm/res/bfs_img.png)
+
+> 예시 그림에서 시작 지점 0으로부터 7 탐색하기.
+
+- 인접리스트와 큐로 구현
+
+```java
+/*
+*  8 9
+*  0 1
+*  1 2
+*  1 3
+*  1 4
+*  3 7
+*  0 5
+*  5 4
+*  5 6
+*  4 7
+*
+* */
+
+public class BFS {
+    private static int shortestDistance=-1; // 탐색 불가.
+    private static String path ="";
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt(); // 정점의 개수
+        int m = sc.nextInt(); // 에지의 개수
+
+        ArrayList<Integer>[] adjList = (ArrayList<Integer>[])new ArrayList[n];
+        for (int i = 0; i < n; i++) {
+            adjList[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < m; i++) {
+            int v1 = sc.nextInt();
+            int v2 = sc.nextInt();
+
+            adjList[v1].add(v2);
+            adjList[v2].add(v1);
+        }
+
+        bfsByList(adjList,0,3);
+
+        System.out.println(path);
+        System.out.println(shortestDistance);
+    }
+
+    public static void bfsByList(ArrayList<Integer>[] adjList, int start, int end) {
+        int[] distance = new int[adjList.length]; // 지점 별 거리 저장
+
+        boolean visited[] = new boolean[adjList.length];
+        Queue<Integer> queue = new LinkedList<>();
+
+        visited[start] = true;
+        queue.add(start);
+
+        while(!queue.isEmpty()){
+            start = queue.poll();
+            path+=start; // 경로 추가
+            if(start == end) { // 도착하면
+                shortestDistance = distance[start];
+                break;
+            }
+
+
+            for(int i=0;i<adjList[start].size();i++){
+                int w= adjList[start].get(i);
+                if(!visited[w]){
+                    visited[w] = true;
+                    distance[w] = distance[start]+1; // 이전 지점 거리 + 1
+                    queue.add(w);
+                }
+
+            }
+        }
+
+        queue.clear();
+        return;
+    }
+
+
+}
+```
+
 </br>
 </br>
 
 [To 목차](#algorithm)
 
+</br>
+</br>
 </br>
