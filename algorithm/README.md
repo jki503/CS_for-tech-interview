@@ -258,7 +258,7 @@ public class DFS {
 }
 ```
 
-![dfs_test](/algorithm/res/dfs_test.png)
+![dfs_test](./res/dfs_test.png)
 
 예시 이미지와 동일한 정보를 입력.
 시작 노드는 0, 도착 노드는 7로 테스트 한 결과
