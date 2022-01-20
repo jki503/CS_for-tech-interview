@@ -25,7 +25,9 @@ Author: Jung
     - [**Stack 명령어**](#stack-명령어)
     - [**push(E),empty() vs add(E),isEmpty()**](#pusheempty-vs-addeisempty)
   - [**Queue**](#queue)
-  - [**Set**](#set)
+    - [**Queue 명령어**](#queue-명령어)
+  - [**HashSet**](#hashset)
+    - [**Set 명령어**](#set-명령어)
 
 </br>
 </br>
@@ -95,6 +97,8 @@ void stackPractice(){
 
 ### **Queue**
 
+#### **Queue 명령어**
+
 |   명령어    |                          내용                           |
 | :---------: | :-----------------------------------------------------: |
 |   add(E)    |    Element 추가(용량 없으면 `IllegalStateException`)    |
@@ -137,4 +141,56 @@ void stackPractice(){
 
 </br>
 
-### **Set**
+### **HashSet**
+
+> - HashTable 자료구조로 삽입 조회 삭제가 O(1)으로 수렴
+> - TreeSet은 삽입과 조회 삭제 모두 O(log n)
+> - HashSet은 기본적으로 내부에서 생성한 HashMap을 사용하여 중복을 피하는 구조
+> - null 값 허용
+
+</br>
+
+#### **Set 명령어**
+
+|   명령어    |            내용             |
+| :---------: | :-------------------------: |
+|   add(E)    |          원소 추가          |
+|  remove(E)  |          원소 삭제          |
+| contains(e) | 원소 포함 여부 boolean 반환 |
+| iterator()  |        iterator 생성        |
+|   clear()   |          원소 삭제          |
+|   size()    |       hashSet 사이즈        |
+|   isEmpty   |   비어있는지 boolena 반환   |
+
+```java
+
+    void setPractice(){
+        Set<Integer> hSet = new HashSet<>();
+        int[] arr = new int[]{1,2,3,5};
+
+        hSet.add(2);
+        hSet.add(2);
+        hSet.add(1);
+        hSet.add(3);
+        hSet.add(5);
+        hSet.add(4);
+        hSet.remove(2);
+        hSet.add(null); // null 허용
+        System.out.println(hSet.contains(3));// true 출력;
+        System.out.println(hSet.size()); //4 출력
+
+
+        Iterator<Integer> iter = hSet.iterator();
+
+        while(iter.hasNext()){
+           System.out.println(iter.next()); // 1 3 4 5 출
+        }
+        hSet.clear();
+        System.out.println(hSet.size()); // 0출력
+        System.out.println(hSet.isEmpty()); // true;
+
+    }
+```
+
+> - 삽입한 순서를 보장 X
+> - 기본적으로 오름차순으로 데이터 정렬
