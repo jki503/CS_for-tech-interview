@@ -5,7 +5,7 @@ tags: 자료구조, 자바, API정리
 Author: Jung
 ---
 
-## My Goal
+## **My Goal**
 
 ---
 
@@ -15,13 +15,17 @@ Author: Jung
 </br>
 </br>
 
-## Table of Contents
+## **Table of Contents**
 
 ---
 
-- [Stack](#stack)
-- [Queue](#queue)
-- [Set](#set)
+- [**My Goal**](#my-goal)
+- [**Table of Contents**](#table-of-contents)
+  - [**Stack**](#stack)
+    - [**Stack 명령어**](#stack-명령어)
+    - [**push(E),empty() vs add(E),isEmpty()**](#pusheempty-vs-addeisempty)
+  - [**Queue**](#queue)
+  - [**Set**](#set)
 
 </br>
 </br>
@@ -79,10 +83,58 @@ void stackPractice(){
 
 #### **push(E),empty() vs add(E),isEmpty()**
 
+</br>
+
 > - push,empty는 stack 함수.
 > - add, isEmpty는 vector 함수.
 > - stack이 vector를 상속받는 구조.
 
+</br>
+</br>
+</br>
+
 ### **Queue**
+
+|   명령어    |                          내용                           |
+| :---------: | :-----------------------------------------------------: |
+|   add(E)    |    Element 추가(용량 없으면 `IllegalStateException`)    |
+|  offer(E)   |                      Element 추가                       |
+|  element()  |       원소 반환, 없으면 `NoSuchElementException`        |
+|   peek()    |              원소 반환, 없으면 `Null 반환`              |
+|  remove()   | 원소 지우고, 원소 반환, 없으면 `NoSuchElementException` |
+|   poll()    |       원소 지우고, 원소 반환, 없으면 `null` 반환        |
+|   size()    |           queue size 반환 (Collection 명령어)           |
+| contains(O) |            포함되어 있는지 체크 (Collcetion)            |
+|  isEmpty()  |           비어있는지 체크(Collection 명령어)            |
+
+</br>
+
+```java
+    void queuePractice(){
+        Queue<Integer> queue = new LinkedList<>();
+
+        queue.add(1);
+        queue.offer(2);
+        queue.offer(3);
+        System.out.println(queue.size()); // 2출력
+
+        while(!queue.isEmpty()){
+            System.out.println(queue.poll()); // 1 2 3 출력
+        }
+        System.out.println(queue.peek()); //null 출력
+        System.out.println(queue.poll()); // null 출력
+
+        System.out.println(queue.element()); //NoSuchElementException
+        System.out.println(queue.remove()); //NoSuchElementException
+    }
+
+```
+
+</br>
+
+> - 명령어마다 용도가 다름(null일때 error를 터트리느냐 반환하느냐)
+> - 상황에 맞게 사용.
+
+</br>
 
 ### **Set**

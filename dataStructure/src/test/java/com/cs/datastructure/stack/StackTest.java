@@ -23,6 +23,6 @@ public class StackTest {
         while(!stack.empty()){ // isEmpty()도 가능
             System.out.println(stack.pop()); // 5, 4, 3, 2, 1 출력
         }
-        stack.pop(); // EmptyStackException...
+       // stack.pop(); // EmptyStackException...
     }
 }
