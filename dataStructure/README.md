@@ -26,6 +26,7 @@ Author: Jung
     - [**push(E),empty() vs add(E),isEmpty()**](#pusheempty-vs-addeisempty)
   - [**Priority Queue**](#priority-queue)
     - [**Priority Queue 명령어**](#priority-queue-명령어)
+    - [**Priority Queue 우선 순위 정하기**](#priority-queue-우선-순위-정하기)
   - [**Queue**](#queue)
     - [**Queue 명령어**](#queue-명령어)
   - [**HashSet**](#hashset)
@@ -107,6 +108,13 @@ void stackPractice(){
 
 </br>
 
+#### **Priority Queue 우선 순위 정하기**
+
+> - 생성할때 기본은 T의 낮은 순으로, 높은 순으로 할 경우 Collections.reverseOrder() 사용
+> - Class의 특정 값을 기준으로 우선 순위를 정하고 싶을때
+>   - Class에 implements ComParable < T > 설정
+>   - CompareTo(T object) overrring
+
 ```java
  void PriorityQueuePractice(){
 
@@ -130,6 +138,50 @@ void stackPractice(){
         while(!pqHigher.isEmpty()){
             System.out.println(pqHigher.poll()); // 5 4 3 2 1 출력
         }
+    }
+
+```
+
+</br>
+
+- 직원의 높은 임금 순대로 큐 삽입
+
+```java
+void priorityQueueComparablePractice(){
+
+        class Employee implements Comparable<Employee>{
+
+            String name;
+            int wage;
+
+            Employee(String name, int wage){
+                this.name = name;
+                this.wage = wage;
+            }
+
+            @Override
+            public int compareTo(Employee o) {
+                return this.wage < o.wage ? 1 : -1;
+            }
+        }
+
+        PriorityQueue<Employee> pq = new PriorityQueue<>();
+
+        // 100000, 60000, 50000, 20000 우선순위
+        pq.offer(new Employee("Jung",100000));
+        pq.offer(new Employee("Na",50000));
+        pq.offer(new Employee("Choi",20000));
+        pq.offer(new Employee("Park",60000));
+
+        while(!pq.isEmpty()){
+            Employee employee = pq.poll();
+            String name = employee.name;
+            int wage = employee.wage;
+
+            // Jung, Park, Na, Choi 출력
+            System.out.println("name : " + name + ", " + "wage : = " + wage);
+        }
+
     }
 
 ```
