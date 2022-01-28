@@ -290,8 +290,17 @@ public class BinarySearch {
 
 </br>
 
-| 출력 결과 |
-| :-------: |
+- 출력 결과
+
+```java
+
+Lower Bound index = 3, value= 3
+Upper Bound index = 5, value= 4
+10
+-1
+-1
+
+```
 
 </br>
 
