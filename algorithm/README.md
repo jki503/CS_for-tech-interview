@@ -10,6 +10,11 @@ Author: Jung
 ---
 
 - [**Algorithm**](#algorithm)
+  - [**Binary Search**](#binary-search)
+    - [**LowerBound**](#lowerbound)
+    - [**UpperBound**](#upperbound)
+    - [**BinarySearch VS Lower(Upper)Bound**](#binarysearch-vs-lowerupperbound)
+    - [**전체 코드(size 잘못 설정했을 경우 잘못된 결과 반환 포함)**](#전체-코드size-잘못-설정했을-경우-잘못된-결과-반환-포함)
   - [**DFS(깊이 우선 탐색)**](#dfs깊이-우선-탐색)
     - [**DFS 동작 원리**](#dfs-동작-원리)
     - [**DFS 시간 복잡도**](#dfs-시간-복잡도)
@@ -25,6 +30,272 @@ Author: Jung
     - [**플로이드-와샬 동작 원리(Floyd-Warshall)**](#플로이드-와샬-동작-원리floyd-warshall)
     - [**플로이드-와샬(Floyd-Warshall) 구현**](#플로이드-와샬floyd-warshall-구현)
     - [**플로이드-와샬(Floyd-Warshall) 시간 복잡도**](#플로이드-와샬floyd-warshall-시간-복잡도)
+
+</br>
+</br>
+</br>
+
+### **Binary Search**
+
+</br>
+
+> - (중복 X)분할과 정복 방식으로 값을 찾는 방식
+
+</br>
+
+```java
+public static int binarySearch(int num, int[] arr){
+        int start = 0;
+        int end = arr.length -1;
+
+        while(start <= end){
+            int mid = (start + end) / 2;
+
+            if(num == arr[mid]) {
+                return mid;
+            }
+            else if(num < arr[mid]){
+                end = mid - 1;
+            }
+            else{
+                start = mid + 1;
+            }
+
+        }
+
+        // 탐색 실패
+        return -1;
+    }
+
+```
+
+</br>
+
+#### **LowerBound**
+
+> - (중복 O)처음으로 구하려고 하는 값 찾기
+
+</br>
+
+```java
+ // num 이상 값이 처음으로 나오는 index 찾기
+    public static int lowerBound(int num, int[] arr) {
+        int start = 0;
+        int end = arr.length;
+
+        while (start < end) {
+            int mid = (start + end) / 2;
+
+            if (arr[mid] >= num) {
+                end = mid;
+            } else {
+                start = mid + 1;
+            }
+
+        }
+
+        // 못찾을 경우
+        if (start >= arr.length)
+            return -1;
+
+        return start;
+    }
+```
+
+</br>
+
+#### **UpperBound**
+
+> - (중복 O)처음으로 구하려고 하는 값 찾기
+
+```java
+// num 초과 값이 처음으로 나오는 index 찾기
+    public static int upperBound(int num, int[] arr) {
+        int start = 0;
+        int end = arr.length;
+
+        while (end > start) {
+            int mid = (start + end) / 2;
+
+            if (arr[mid] > num) {
+                end = mid;
+            } else
+                start = mid + 1;
+        }
+
+        // 못찾을 경우
+        if (start >= arr.length)
+            return -1;
+
+        return start;
+    }
+
+```
+
+</br>
+
+#### **BinarySearch VS Lower(Upper)Bound**
+
+</br>
+
+> - 기본적으로 코드와 탐색 메커니즘은 유사
+>
+> - 가장 큰 차이는 end 지점을
+>
+>   - binarySearch는 length-1
+>
+>   - Lower(Upper)Bound는 length로 설정한다.
+>
+> - while문의 조건도 다른다
+>
+>   - binarySearch는 start <= end
+>   - Lower(Upper)Bound는 start < end
+>
+> - Why?
+>   - 탐색하는 범위가 다르다.
+>   - binarySearch는 배열안에서 특정 값만 찾고, 못찾으면 에러를 표시하면 되지만
+>   - LowerBound(UpperBound)는 배열의 끝값보다 이상일 경우
+>   - index 검사후 에러를 반환해야한다.
+
+#### **전체 코드(size 잘못 설정했을 경우 잘못된 결과 반환 포함)**
+
+</br>
+
+```java
+public class BinarySearch {
+
+    public static void main(String[] args) {
+
+        // 3 이상 값이 처음 나오는 index = 3 -> LowerBound
+        // 3 초과 값이 처음 나오는 index = 5 -> UpperBound
+        // size = 11
+        // 배열은 정렬되어있다고 가정한다. 정렬된 배열 사용
+        int[] arr = {1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 6};
+
+        int indexLower = lowerBound(3, arr);
+        int indexUpper = upperBound(3, arr);
+
+
+        System.out.println("Lower Bound index = " + indexLower + ", value= " + arr[indexLower]);
+        System.out.println("Upper Bound index = " + indexUpper + ", value= " + arr[indexUpper]);
+
+        // end를 arr.length가 아닌 arr.length-1로 잘못 설정할 경우
+        System.out.println(upperBoundEndFault(7, arr));
+
+        // 찾을 수 없다면 return index -1
+        System.out.println(lowerBound(7, arr));
+        System.out.println(upperBound(7, arr));
+
+        /* 출력 예시
+
+            Lower Bound index = 3, value= 3
+            Upper Bound index = 5, value= 4
+            10
+            -1
+            -1
+        */
+    }
+
+
+    public static int binarySearch(int num, int[] arr){
+        int start = 0;
+        int end = arr.length -1;
+
+        while(start <= end){
+            int mid = (start + end) / 2;
+
+            if(num == arr[mid]) {
+                return mid;
+            }
+            else if(num < arr[mid]){
+                end = mid - 1;
+            }
+            else{
+                start = mid + 1;
+            }
+
+        }
+
+        // 탐색 실패
+        return -1;
+    }
+
+    // num 이상 값이 처음으로 나오는 index 찾기
+    public static int lowerBound(int num, int[] arr) {
+        int start = 0;
+        int end = arr.length;
+
+        while (start < end) {
+            int mid = (start + end) / 2;
+
+            if (arr[mid] >= num) {
+                end = mid;
+            } else {
+                start = mid + 1;
+            }
+
+        }
+
+        // 못찾을 경우
+        if (start >= arr.length)
+            return -1;
+
+        return start;
+    }
+
+    // num 초과 값이 처음으로 나오는 index 찾기
+    public static int upperBound(int num, int[] arr) {
+        int start = 0;
+        int end = arr.length;
+
+        while (end > start) {
+            int mid = (start + end) / 2;
+
+            if (arr[mid] > num) {
+                end = mid;
+            } else
+                start = mid + 1;
+        }
+
+        // 못찾을 경우
+        if (start >= arr.length)
+            return -1;
+
+        return start;
+    }
+
+    public static int upperBoundEndFault(int num, int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+
+        while (end > start) {
+            int mid = (start + end) / 2;
+
+            if (arr[mid] > num) {
+                end = mid;
+            } else
+                start = mid + 1;
+        }
+
+        // 못찾을 경우
+        if (start >= arr.length)
+            return -1;
+
+        return start;
+    }
+
+}
+
+```
+
+</br>
+
+| 출력 결과 |
+| :-------: |
+
+</br>
+
+[To 목차](#algorithm)
 
 </br>
 </br>
@@ -689,3 +960,11 @@ public class FloydWarshall {
 
 > - 경유 V를 기준으로 출발 V, 도착 V를 3중포문 -> O(n^3)
 > - 즉 사용할때 vertex의 개수의 유의
+
+</br>
+
+[To 목차](#algorithm)
+
+</br>
+</br>
+</br>
