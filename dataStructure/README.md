@@ -31,6 +31,8 @@ Author: Jung
     - [**Queue 명령어**](#queue-명령어)
   - [**HashSet**](#hashset)
     - [**Set 명령어**](#set-명령어)
+  - [**HashMap**](#hashmap)
+    - [**HashMap 명령어**](#hashmap-명령어)
 
 </br>
 </br>
@@ -235,6 +237,8 @@ void priorityQueueComparablePractice(){
 > - 상황에 맞게 사용.
 
 </br>
+</br>
+</br>
 
 ### **HashSet**
 
@@ -289,3 +293,87 @@ void priorityQueueComparablePractice(){
 
 > - 삽입한 순서를 보장 X
 > - 기본적으로 오름차순으로 데이터 정렬
+
+</br>
+</br>
+</br>
+
+### **HashMap**
+
+</br>
+
+#### **HashMap 명령어**
+
+|       명령어       |              내용              |
+| :----------------: | :----------------------------: |
+|   put(key,value)   |         key-value 저장         |
+|     remove(key     |           key값 삭제           |
+|  containsKey(key)  |  key값 여부에 따라 true/false  |
+| containsKey(value) | value값 여부에 따라 true/false |
+
+</br>
+
+```java
+package com.cs.datastructure.map;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+public class MapTest {
+
+    @Test
+    void HashMapPractice(){
+        HashMap<String,Integer> map = new HashMap<>();
+
+        map.put("AA",1);
+        map.put("BB",2);
+        map.put("CC",3);
+
+        // AA의 value가 2로 갱신
+        map.put("AA",2);
+
+
+        // entrySet
+        System.out.println("=====EntrySet 반복문 조회=====");
+        for (Map.Entry<String,Integer> entry: map.entrySet()){
+            System.out.println("[key] : " + entry.getKey() + " [value] : " + entry.getValue());
+        }
+        System.out.println();
+
+        // keySet
+        System.out.println("=====KeySet 반복문 조회=====");
+        for(String s : map.keySet()){
+            System.out.println("[key] : " + s + " [value] : " + map.get(s));
+        }
+
+        System.out.println();
+
+        // iterator
+        System.out.println("=====Iterator 조회=====");
+        Iterator<String> keys = map.keySet().iterator();
+        while(keys.hasNext()){
+            String key = keys.next();
+            System.out.println("[key] : " + key + " [value] : " + map.get(key));
+        }
+
+        System.out.println();
+
+        map.remove("CC"); // BB 삭제
+        System.out.println(map.get("AA")); // 2
+        System.out.println(map.containsKey("b")); // false
+        System.out.println(map.containsKey("AA")); // true
+        System.out.println(map.containsValue(3)); // false;
+
+    }
+}
+
+```
+
+</br>
+
+> HashMap 조회 방법은 EntrySet, KeySet, Iterator  
+> 데이터 양이 클 수록 get(key) 호출 부담
+> 전체를 조회할 경우 특수한 경우 아닐 경우 EntrySet이 효율적
