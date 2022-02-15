@@ -19,5 +19,6 @@ Computer science(Algorithm, DataStructure, OS, DB) 공부에 대한 정리
 
 ---
 
-- [Algorithm(알고리즘)](algorithm/README.md)
-- [DataStructure(자료구조](dataStructure/README.md)
+- [Algorithm(알고리즘)](./algorithm/README.md)
+- [DataStructure(자료구조](./dataStructure/README.md)
+- [DataBase(데이터베이스)](./database/README.md)

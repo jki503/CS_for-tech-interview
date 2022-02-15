@@ -1,6 +1,6 @@
 ---
-title: DataStructure,
-category: algorithm,
+title: DataStructure
+category: algorithm
 tags: 자료구조, 자바, API정리
 Author: Jung
 ---
