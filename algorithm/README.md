@@ -30,6 +30,10 @@ Author: Jung
     - [**플로이드-와샬 동작 원리(Floyd-Warshall)**](#플로이드-와샬-동작-원리floyd-warshall)
     - [**플로이드-와샬(Floyd-Warshall) 구현**](#플로이드-와샬floyd-warshall-구현)
     - [**플로이드-와샬(Floyd-Warshall) 시간 복잡도**](#플로이드-와샬floyd-warshall-시간-복잡도)
+  - [**크루스칼(Kruskal)**](#크루스칼kruskal)
+    - [**크루스칼(Kruskal) 동작 원리**](#크루스칼kruskal-동작-원리)
+    - [**크루스칼(Kruskal) 구현**](#크루스칼kruskal-구현)
+    - [**크루스칼(Kruskal) 시간 복잡도**](#크루스칼kruskal-시간-복잡도)
 
 </br>
 </br>
@@ -867,6 +871,8 @@ public class Dijkstra {
 
 ### **플로이드-와샬(Floyd-Warshall)**
 
+</br>
+
 #### **플로이드-와샬 동작 원리(Floyd-Warshall)**
 
 </br>
@@ -969,6 +975,132 @@ public class FloydWarshall {
 </br>
 
 [To 목차](#algorithm)
+
+</br>
+</br>
+</br>
+
+### **크루스칼(Kruskal)**
+
+</br>
+
+#### **크루스칼(Kruskal) 동작 원리**
+
+> 가장 적은 비용으로 모든 노드를 연결시키는 알고리즘  
+> 최소 비용 신장 트리 만들기.
+
+- 간선의 가중치로 오름차순 정렬
+- 정렬된 순서에 맞게 간선 저장
+- 저장 전에 사이클인지 아닌지 확인
+- 사이클을 발생시키면 저장 X
+- 즉 저장되는 간선은 V-1
+
+</br>
+
+#### **크루스칼(Kruskal) 구현**
+
+</br>
+
+|             Graph             |
+| :---------------------------: |
+| ![kruskal](./res/kruskal.png) |
+
+- 최소 비용 신장 트리 만들기
+
+</br>
+
+```java
+
+import java.util.Arrays;
+
+public class Kruskal {
+
+    public static void main(String[] args) {
+
+        int V = 7;
+        int[][] E = {
+                {1,7,12},
+                {5,7,73},
+                {4,7,13},
+                {3,6,37},
+                {2,5,62},
+                {3,5,20},
+                {5,6,45},
+                {1,2,67},
+                {2,4,24},
+                {1,5,17},
+                {1,4,28},
+        };
+        // cost 기준으로 오름 차순 정렬
+        Arrays.sort(E, (e1,e2) -> e1[2] -e2[2]);
+
+        // 부모 노드
+        int[] parent = new int[V+1];
+        for(int i=1;i<=V;i++)
+            parent[i] = i;
+
+        int costSum = 0;
+        for (int[] e: E) {
+
+            // 같은 부모면 - cycle 발생이면 continue;
+            if(checkCycle(parent,e[0],e[1]))
+                continue;
+            costSum += e[2];
+            unionParent(parent,e[0], e[1]);
+            System.out.println("Edge : " +e[0] + " " + e[1]);
+        }
+
+        System.out.println(costSum);
+
+    }
+
+    public static boolean checkCycle(int[] p, int e1, int e2){
+
+        e1 = getParent(p,e1);
+        e2 = getParent(p,e2);
+
+        return e1 == e2 ? true : false;
+    }
+
+    public static int getParent(int[]p, int e){
+
+        if(p[e] == e) return e;
+        return getParent(p,p[e]);
+    }
+
+    public static void unionParent(int[] p, int e1, int e2){
+
+        e1 = getParent(p,e1);
+        e2 = getParent(p,e2);
+
+        // 더 작은 부모로 병합
+        if(e1 < e2) p[e2] = e1;
+        else p[e1] = e2;
+    }
+
+}
+
+```
+
+</br>
+
+|                    결과                     |
+| :-----------------------------------------: |
+| ![kruskal_result](./res/kruskal_result.png) |
+
+</br>
+
+> 최소 비용을 모두 더한 결과 출력
+> 연결된 간선 정보 출력 (V-1)
+
+</br>
+
+#### **크루스칼(Kruskal) 시간 복잡도**
+
+> - Arrays.sort 시간 복잡도 O(E\*logE)
+> - edge data 탐색 O(E)
+> - O(E\*logE)에 수렴
+> - Arrays.sort는 최악의 경우 O(n^2)가 될 수 있음으로 시간 복잡도가 보장되는 상황에서 채택할 것
 
 </br>
 </br>
