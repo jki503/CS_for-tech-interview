@@ -59,14 +59,15 @@ Author: Jung
 </br>
 
 > 1. 사용자가 domain으로 요청시 Local DNS로 dns query 보냄.
-> 2. Local DNS에 domain과 ip 주소의 관계가 캐싱 되어 있으면 응답
+> 2. Local DNS에 domain과 ip 주소의 관계가 캐시 되어 있으면 응답
 > 3. Local DNS에 없으면 Root DNS로 요청
-> 4. Root DNS는 (.com, .net)를 확인 한 후 TLD DNS의 정보를 Local DNS로 전달
-> 5. Local DNS는 authoritative DNS에 domain을 요청한 후 ip 주소를 전달 받는다.
+> 4. Root DNS에서 TLD 정보를 Local DNS로 전달
+> 5. LOCAL DNS는 TLD에 요청
+> 6. authoritative는 domain에 대한 IP를 Local DNS에 전달
 
 </br>
 
-> Local(있으면 바로 응답) -> Root -> Local -> TLD -> Local -> authoritative -> Local
+> Local(있으면 바로 응답) -> Root -> Local -> TLD -> Local -> authoritative -> sLocal
 
 </br>
 
