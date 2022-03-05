@@ -133,8 +133,6 @@ Author: Jung
 > runtime 이후에 결정되는 uninitialized가 메모리 관점에서 효율적
 >
 > `stack`만 메모리의 상위 영역부터 할당되는 segment
->
-> `heap`이 커지면 `stack` 영역이 작아지고 역도 성립
 
 </br>
 
