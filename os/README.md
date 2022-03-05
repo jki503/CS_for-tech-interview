@@ -37,6 +37,7 @@ Author: Jung
     - [**PCB**](#pcb)
     - [**Context Switch**](#context-switch)
     - [**zombie 프로세스와 orphan 프로세스의 차이**](#zombie-프로세스와-orphan-프로세스의-차이)
+  - [**fork() wait()**](#fork-wait)
 
 </br>
 
@@ -187,6 +188,54 @@ Author: Jung
 >
 > - orphan 프로세스는 부모 프로세스가 wait() call을 하지 않아 자식 프로세스가 먼저 종료 되는 경우
 >   - 이때 init 프로세스가 호출되어 자식 프로세스가 새로운 부모 프로세스가 됨
+
+### **fork() wait()**
+
+- fork()
+
+  > - 새로운 프로세스를 생성시키고 이 프로세스는 parent 프로세스의 주소공간을 복사
+  > - 즉 서로 다른 스택, 힙, 데이터, 코드 영역을 가진다.
+
+</br>
+
+- wait()
+
+  - wait() 함수 발생시 현재 프로세스는 wait queue로 이동
+  - 자식 프로세스가 종료되 면 부모 프로세스는 ready queue로 이동
+  - 다시 실행 가능
+
+- 예제
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <wait.h>
+
+int value = 5;
+
+int main()
+{
+  pid_t pid;
+  pid = fork();
+
+  if(pid == 0){ // child
+    value +=15;
+    return 0;
+  }
+  else if(pid > 0){ // parent
+    wait(NULL);
+    printf("Parent: value = %d\n", value); // value=?
+  }
+
+}
+
+```
+
+</br>
+
+> process는 서로 공유하는 data 영역이 다름  
+> 즉 자식의 value와 parent의 value는 다른 영역임으로
+> value = 5 !
 
 </br>
 </br>
