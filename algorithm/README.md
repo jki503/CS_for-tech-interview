@@ -37,6 +37,9 @@ Author: Jung
   - [**슬라이딩 윈도우(sliding window)**](#슬라이딩-윈도우sliding-window)
     - [**슬라이딩 윈도우 구현 순서**](#슬라이딩-윈도우-구현-순서)
     - [**슬라이딩 윈도우 구현**](#슬라이딩-윈도우-구현)
+  - [**투포인터 알고리즘**](#투포인터-알고리즘)
+    - [**투포인터 알고리즘 상황**](#투포인터-알고리즘-상황)
+    - [**투포인터 알고리즘 에제 코드 구현**](#투포인터-알고리즘-에제-코드-구현)
 
 </br>
 </br>
@@ -1176,3 +1179,82 @@ public class SlidingWindow {
 
 
 ```
+
+</br>
+</br>
+</br>
+
+### **투포인터 알고리즘**
+
+</br>
+
+> 슬라이딩 윈도우와 반대로 고정적인 길이가 아닌  
+> 1차원 배열에서 두개의 포인터를 이용하여 원하는 데이터를 얻는 알고리즘
+
+</br>
+
+#### **투포인터 알고리즘 상황**
+
+> 1. 배열에서 연속되는 합 result의 경우의 수
+> 2. result가 성립되는 최소 범위와 그때의 index
+
+</br>
+
+#### **투포인터 알고리즘 에제 코드 구현**
+
+</br>
+
+```java
+
+package com.cs.algorithm;
+
+public class TwoPointer {
+
+    public static void main(String[] args) {
+
+        int[] arr = {1,2,3,4,2,5,4,1,1,2};
+
+        int n = arr.length;
+        int result = 5;
+
+        // 1. result가 나오는 경우의 수
+        // 2.
+        int cnt = 0;
+
+        int start = 0;
+        int end = 0;
+        int sum = 0;
+
+        int range = arr.length + 1;
+        int tempStart = 0;
+
+        while(end < n){
+
+            if(sum >= result)
+                sum-= arr[tempStart++];
+            else
+                sum+= arr[end++];
+
+            if(sum == result) {
+
+                // 범위 갱신
+                if(range >= end - tempStart) {
+                    range = end - tempStart;
+                    start = tempStart;
+                }
+                cnt++;
+            }
+        }
+
+        System.out.println(cnt); // 1번
+        System.out.println("범위 = " + range + ", start = " + start + ", end = " + (start - 1 + range) );
+
+    }
+}
+
+
+```
+
+</br>
+</br>
+</br>
