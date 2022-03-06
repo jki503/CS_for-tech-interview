@@ -37,7 +37,8 @@ Author: Jung
     - [**PCB**](#pcb)
     - [**Context Switch**](#context-switch)
     - [**zombie 프로세스와 orphan 프로세스의 차이**](#zombie-프로세스와-orphan-프로세스의-차이)
-  - [**fork() wait()**](#fork-wait)
+    - [**fork() wait()**](#fork-wait)
+    - [**IPC**](#ipc)
 
 </br>
 
@@ -189,7 +190,7 @@ Author: Jung
 > - orphan 프로세스는 부모 프로세스가 wait() call을 하지 않아 자식 프로세스가 먼저 종료 되는 경우
 >   - 이때 init 프로세스가 호출되어 자식 프로세스가 새로운 부모 프로세스가 됨
 
-### **fork() wait()**
+#### **fork() wait()**
 
 - fork()
 
@@ -236,6 +237,46 @@ int main()
 > process는 서로 공유하는 data 영역이 다름  
 > 즉 자식의 value와 parent의 value는 다른 영역임으로
 > value = 5 !
+
+</br>
+
+#### **IPC**
+
+</br>
+
+> 프로세스가 서로 협력하며 실행 될 경우  
+> 각 프로세스들간의 영향을 미치는 것(shared data)을 고려하는 `프로세스들간의 통신`
+
+</br>
+
+- shared memory
+
+> 프로세스의 메모리 영역은 다른 프로세스가 접근 할 수 없도록 독립적인 공간을 보장해야 한다.  
+> 따라서 각 프로세스들이 메모리 영역의 공유 메모리를 이용하여 사용 할 수 있도록 한다.  
+> 커널은 프로세스로부터 공유메모리 할당 요청을 받은 이후, 프로세스들이 해당 공유 메모리 영역에 접근 할 수 있다.
+
+</br>
+
+- message passing
+
+> 공유하는 메모리 영역 없이 프로세스 사이에 데이터를 송수신 및 동기화 작업
+> OS는 send()와 receive 명령어를 제공
+> link를 구성할 때 direct or indirect 또 동기화와 비동기 통신 설정
+
+|            수단            |                                설명                                |
+| :------------------------: | :----------------------------------------------------------------: |
+|           direct           | 송수신자를 명시하여 하나의 링크를 제공하여 두 개의 프로세스가 소통 |
+|          indirect          |      mailbox(port)를 이용하여 두 개 이상의 프로세스들이 소통       |
+|   synchronous(blocking)    |  sender(receiver) 보냈다(받았다)는 메시지를 받기 전까지 blocking   |
+| asynchronous(non-blocking) |      sender(receiver)가 송수신하고 계속하여 다른 작업을 수행       |
+
+</br>
+
+> 영화 2g를 mailbox(1G)를 통해 송수신한다고 가정
+> sender가 2g를 다 보내어 메시지를 받기 전까지 sender blocking, > receiver도 다 받았다는 메시지 받기 전까지 blocking
+>
+> sender가 2g를 다 보냈다는 메시지 받지 않아도 running 상태
+> receiver 역시 메시지 여부 필요 없음
 
 </br>
 </br>
