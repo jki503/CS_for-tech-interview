@@ -34,6 +34,9 @@ Author: Jung
     - [**크루스칼(Kruskal) 동작 원리**](#크루스칼kruskal-동작-원리)
     - [**크루스칼(Kruskal) 구현**](#크루스칼kruskal-구현)
     - [**크루스칼(Kruskal) 시간 복잡도**](#크루스칼kruskal-시간-복잡도)
+  - [**슬라이딩 윈도우(sliding window)**](#슬라이딩-윈도우sliding-window)
+    - [**슬라이딩 윈도우 구현 순서**](#슬라이딩-윈도우-구현-순서)
+    - [**슬라이딩 윈도우 구현**](#슬라이딩-윈도우-구현)
 
 </br>
 </br>
@@ -1105,3 +1108,71 @@ public class Kruskal {
 </br>
 </br>
 </br>
+
+### **슬라이딩 윈도우(sliding window)**
+
+</br>
+
+> 특정 자료구조에서 연속되는 n개의 값의 최대값을 구하는 알고리즘
+
+</br>
+
+#### **슬라이딩 윈도우 구현 순서**
+
+</br>
+
+- 먼저 첫번째 원소부터 size만큼의 합을 구한다. (비교 대상 필요)
+- 이후 반복문을 돌면서 앞서 있던 합의 첫번째 원소를 하나 지우고, 다음 하나의 원소를 더한다.
+- 비교 후 max값을 비교하여 갱신.
+
+</br>
+
+#### **슬라이딩 윈도우 구현**
+
+</br>
+
+```java
+
+package com.cs.algorithm;
+
+public class SlidingWindow {
+
+    public static void main(String[] args) {
+
+        int[] arr = {1,4,7,10,8,6,2,3,9,5};
+
+        int size = 4;
+
+        // 배열에서 연속된 size만큼의 원소의 합 중 최대값과 시작되는 인덱스 구하기.
+
+        //1. 첫번째 size만큼의 합 저장
+
+        int sum = 0;
+
+        for(int i=0;i<size;i++)
+             sum += arr[i];
+
+        int max = sum;
+        int idx = 0;
+
+        // 2. 반복문으로 탐색
+        for(int i=size; i < arr.length; i++){
+
+            // 앞서 있던 시작 원소 빼고, 새로운 원소 더하기
+            sum += arr[i] - arr[i-size];
+
+            if(sum > max){
+                max = sum;
+                idx = i - size + 1;
+            }
+        }
+
+
+        // index = 2, max = 31
+        System.out.println("index = " + idx + ", max = " + max);
+    }
+
+}
+
+
+```
