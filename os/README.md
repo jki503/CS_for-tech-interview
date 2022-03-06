@@ -278,6 +278,82 @@ int main()
 > sender가 2g를 다 보냈다는 메시지 받지 않아도 running 상태
 > receiver 역시 메시지 여부 필요 없음
 
+- Pipe
+
+|        Ordinary pipe         |                 named pipe                  |
+| :--------------------------: | :-----------------------------------------: |
+| 부모 자식 관계에서 연결 가능 | 통신할 프로세스들을 모를 경우에도 연결 가능 |
+
+> 두 pipe 방식다 한 쪽에서 쓰고, 한쪽에서 사용하는 단순한 흐름일 때 간편
+> two - way 전이중 통신에서는 pipe를 2개 만들어 구현을 복잡하게 한다.
+
+</br>
+
+- Socket
+
+> 전송을 주고 받을 프로세스들간의 ip와 port를 바인딩하여 데이터 공유
+
+</br>
+
+```java
+
+import java.net.*;
+import java.io.*;
+
+public class DateServer {
+
+    public static void main(String[] args) throws Exception{
+
+    ServerSocket server = new ServerSocket(6013);
+
+    /* Now listen for connections */
+    while (true) {
+      Socket client = server.accept();
+      PrintWriter pout = new PrintWriter(client.getOutputStream(), true);
+
+      /* write the Date to the socket */
+      pout.println(new java.util.Date().toString());
+
+      /* close the socket and resume listening for connections */
+      client.close();
+    }
+  }
+}
+
+```
+
+```java
+
+ import java.net.*;
+  import java.io.*;
+  public class DateClient {
+
+      public static void main(String[] args) throws Exception {
+
+          /* make connection to server socket */
+          Socket socket = new Socket("127.0.0.1", 6013);
+          InputStream in = socket.getInputStream();
+          BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+          /* read date from the socket */
+          String line = null;
+          while ((line = br.readLine()) != null)
+              System.out.println(line);
+
+          /* close the socket connections */
+          socket.close();
+      }
+}
+
+```
+
+> 서버는 소켓을 열고 클라이언트 소켓 연결 대기 - server.accept()  
+> 서버는 클라이언트가 소켓 연결하면 client를 반환 받은 후 client outputStream에 데이터 입력  
+> 서버는 클라이언트에게 전송 해준 후 client.close()
+>
+> 클라이언트는 ip와 port로 서버 바인딩
+> 클라이언트는 inputStream으로 데이터를 받아온 후 client 종료.
+
 </br>
 </br>
 </br>
