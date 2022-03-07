@@ -39,6 +39,8 @@ Author: Jung
     - [**zombie 프로세스와 orphan 프로세스의 차이**](#zombie-프로세스와-orphan-프로세스의-차이)
     - [**fork() wait()**](#fork-wait)
     - [**IPC**](#ipc)
+  - [**ch4. Thread**](#ch4-thread)
+    - [**thread 특징**](#thread-특징)
 
 </br>
 
@@ -357,3 +359,17 @@ public class DateServer {
 </br>
 </br>
 </br>
+
+### **ch4. Thread**
+
+</br>
+
+> 프로세스에서 하나의 실행 단위
+
+</br>
+
+#### **thread 특징**
+
+> 하나의 스레스가 동기 실행하더라도 다른 스레드는 실행을 계속할 수 있어 `반응성` 좋다
+> code, data, heap을 공유하여 `자원을 공유`하는데 용이하다.
+> process 사이의 context switching보다 경제적이다.
