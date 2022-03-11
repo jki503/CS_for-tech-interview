@@ -50,6 +50,9 @@ Author: Jung
     - [**Priority-based**](#priority-based)
     - [**MLQ**](#mlq)
     - [**MLFQ**](#mlfq)
+  - [**ch6. Synchronization Tools**](#ch6-synchronization-tools)
+    - [**Race Condition**](#race-condition)
+    - [**Race Condition 해결 충족 조건**](#race-condition-해결-충족-조건)
 
 </br>
 
@@ -485,3 +488,26 @@ public class DateServer {
 > 타임퀀텀을 상이한 RR queue를 두고  
 > 타임퀀텀을 다 소비하고도 종료되지 않으면 점진적으로  
 > 더 타임퀀텀이 긴 RR queue로 이동하여 수행되도록 하는 것
+
+</br>
+</br>
+</br>
+
+### **ch6. Synchronization Tools**
+
+</br>
+
+#### **Race Condition**
+
+</br>
+
+> 여러개의 프로세스들이 critical section 영역에 접근 할때 데이터 불일치가 발생  
+> entry section에서 프로세스의 진입을 허가 받고
+> critical section을 사용하고
+> exit section에서 허가를 반납
+
+#### **Race Condition 해결 충족 조건**
+
+> `Mutual Exclusion(상호 배제)` : 프로세스가 critical section 점유 상태면 다른 프로세스는 접근 불가  
+> `Progress(진행 - avoid DeadLock)` : 다른 프로세스가 critical section에 들어가는 것을 방해하면 안된다.  
+> `Bounded Waiting(한정 대기 - avoid Starvation)` : 기다리는 시간의 제한을 정하여 무한정 대기를 피한다.
