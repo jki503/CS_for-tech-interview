@@ -53,6 +53,8 @@ Author: Jung
   - [**ch6. Synchronization Tools**](#ch6-synchronization-tools)
     - [**Race Condition**](#race-condition)
     - [**Race Condition 해결 충족 조건**](#race-condition-해결-충족-조건)
+    - [**Mutex**](#mutex)
+    - [**sSemaphore**](#ssemaphore)
 
 </br>
 
@@ -511,3 +513,29 @@ public class DateServer {
 > `Mutual Exclusion(상호 배제)` : 프로세스가 critical section 점유 상태면 다른 프로세스는 접근 불가  
 > `Progress(진행 - avoid DeadLock)` : 다른 프로세스가 critical section에 들어가는 것을 방해하면 안된다.  
 > `Bounded Waiting(한정 대기 - avoid Starvation)` : 기다리는 시간의 제한을 정하여 무한정 대기를 피한다.
+
+</br>
+</br>
+</br>
+
+#### **Mutex**
+
+> mutex는 임계구역을 보호하고 레이스컨디션을 방지하기 위함  
+> 프로세스가 락을 획득하여 임계 구역에 들어가고 나올 때 락을 반환
+
+</br>
+
+- busy waiting
+
+> 프로세스가 임계구역에 들어가려고 할 때 무한 loop로 lock을 대기 할 때 발생  
+> 장점 : 공유자원을 사용하는 프로세스들의 자원 사용 시간이 짧으면 효율적  
+> 단점 : 권한 획득을 위해 CPU 낭비 발생
+
+#### **sSemaphore**
+
+> n개의 프로세스가 크리티컬 섹션을 동시 접근 할때 문제 발생 방지  
+> mutex가 boolean 값으로 체크하는 반면 세마포어는 자원의 개수로 결정  
+> 0과 1(binary semaphore)일때 mutex lock과 유사  
+> 세마포어에서 busywaiting 문제를 해결하기 위해 wait() 함수 사용  
+> wait()함수를 통해 현재 프로세스를 중지 하고 wait queue로 보낸 후  
+> siganl() 통해 재시작 하는 메커니즘
